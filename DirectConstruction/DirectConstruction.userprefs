@@ -1,0 +1,12 @@
+﻿<Properties StartupItem="DirectConstruction/DirectConstruction.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="DirectConstruction/Program.cs">
+    <Files>
+      <File FileName="DirectConstruction/Program.cs" Line="71" Column="29" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
