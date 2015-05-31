@@ -3,3 +3,8 @@
 /home/luvex/Documents/DirectConstruction/DirectConstruction/bin/Debug/DirectConstruction.exe
 /home/luvex/Documents/DirectConstruction/DirectConstruction/obj/x86/Debug/DirectConstruction.exe
 /home/luvex/Documents/DirectConstruction/DirectConstruction/obj/x86/Debug/DirectConstruction.exe.mdb
+/home/luvex/Documents/compilerTheory/DirectConstruction/DirectConstruction/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/luvex/Documents/compilerTheory/DirectConstruction/DirectConstruction/bin/Debug/DirectConstruction.exe.mdb
+/home/luvex/Documents/compilerTheory/DirectConstruction/DirectConstruction/bin/Debug/DirectConstruction.exe
+/home/luvex/Documents/compilerTheory/DirectConstruction/DirectConstruction/obj/x86/Debug/DirectConstruction.exe
+/home/luvex/Documents/compilerTheory/DirectConstruction/DirectConstruction/obj/x86/Debug/DirectConstruction.exe.mdb

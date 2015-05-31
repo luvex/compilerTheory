@@ -1,0 +1,5 @@
+/home/luvex/workplace/Compiler/FirstFollow/FirstFollow/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/luvex/workplace/Compiler/FirstFollow/FirstFollow/bin/Debug/FirstFollow.exe.mdb
+/home/luvex/workplace/Compiler/FirstFollow/FirstFollow/bin/Debug/FirstFollow.exe
+/home/luvex/workplace/Compiler/FirstFollow/FirstFollow/obj/x86/Debug/FirstFollow.exe
+/home/luvex/workplace/Compiler/FirstFollow/FirstFollow/obj/x86/Debug/FirstFollow.exe.mdb
