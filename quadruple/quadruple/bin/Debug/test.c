@@ -1,0 +1,14 @@
+if(a<b)
+{
+  if(c>d)
+     x=f;
+  else
+     x=t;
+}
+else
+{
+  if(b<y)
+     x=y;
+  else
+     x=r;
+}
