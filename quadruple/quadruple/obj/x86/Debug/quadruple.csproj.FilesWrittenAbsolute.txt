@@ -1,5 +1,5 @@
-/home/luvex/Documents/compilerTheory/quadruple/quadruple/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
-/home/luvex/Documents/compilerTheory/quadruple/quadruple/bin/Debug/quadruple.exe.mdb
-/home/luvex/Documents/compilerTheory/quadruple/quadruple/bin/Debug/quadruple.exe
-/home/luvex/Documents/compilerTheory/quadruple/quadruple/obj/x86/Debug/quadruple.exe
-/home/luvex/Documents/compilerTheory/quadruple/quadruple/obj/x86/Debug/quadruple.exe.mdb
+/home/luvex/Documents/quadruple/quadruple/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/luvex/Documents/quadruple/quadruple/bin/Debug/quadruple.exe.mdb
+/home/luvex/Documents/quadruple/quadruple/bin/Debug/quadruple.exe
+/home/luvex/Documents/quadruple/quadruple/obj/x86/Debug/quadruple.exe
+/home/luvex/Documents/quadruple/quadruple/obj/x86/Debug/quadruple.exe.mdb

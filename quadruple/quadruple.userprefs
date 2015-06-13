@@ -1,14 +1,14 @@
-﻿<Properties StartupItem="quadruple/quadruple.csproj">
+﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="quadruple/Program.cs">
     <Files>
-      <File FileName="quadruple/Program.cs" Line="57" Column="40" />
+      <File FileName="quadruple/Program.cs" Line="25" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/luvex/Documents/compilerTheory/quadruple/quadruple/Program.cs" line="62" column="1" />
-      <Breakpoint file="/home/luvex/Documents/compilerTheory/quadruple/quadruple/Program.cs" line="219" column="1" />
+      <Breakpoint file="/home/luvex/Documents/quadruple/quadruple/Program.cs" line="302" column="1" />
+      <Breakpoint file="/home/luvex/Documents/quadruple/quadruple/Program.cs" line="76" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quadruple", "quadruple\quadruple.csproj", "{46FAA52C-8780-48A5-9685-E82EEBAC932C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quadruple", "quadruple\quadruple.csproj", "{C5DEB06B-9108-4E2B-9347-6D4F4FD869DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,9 +9,12 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{46FAA52C-8780-48A5-9685-E82EEBAC932C}.Debug|x86.ActiveCfg = Debug|x86
-		{46FAA52C-8780-48A5-9685-E82EEBAC932C}.Debug|x86.Build.0 = Debug|x86
-		{46FAA52C-8780-48A5-9685-E82EEBAC932C}.Release|x86.ActiveCfg = Release|x86
-		{46FAA52C-8780-48A5-9685-E82EEBAC932C}.Release|x86.Build.0 = Release|x86
+		{C5DEB06B-9108-4E2B-9347-6D4F4FD869DC}.Debug|x86.ActiveCfg = Debug|x86
+		{C5DEB06B-9108-4E2B-9347-6D4F4FD869DC}.Debug|x86.Build.0 = Debug|x86
+		{C5DEB06B-9108-4E2B-9347-6D4F4FD869DC}.Release|x86.ActiveCfg = Release|x86
+		{C5DEB06B-9108-4E2B-9347-6D4F4FD869DC}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = quadruple\quadruple.csproj
 	EndGlobalSection
 EndGlobal
