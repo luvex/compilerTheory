@@ -6,7 +6,7 @@ by automating the "导出文本" (Export Text) button click.
 URL: http://www.dce.com.cn/dce/channel/list/1018.html
 
 Prerequisites:
-    pip install playwright
+    pip install playwright playwright-stealth
     playwright install chromium
 
 Usage:
@@ -21,6 +21,7 @@ import time
 import glob
 import argparse
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeout
+from playwright_stealth import stealth_sync
 
 
 PAGE_URL = "http://www.dce.com.cn/dce/channel/list/1018.html"
@@ -29,23 +30,33 @@ DOWNLOAD_DIR_NAME = "dce_downloads"
 
 def find_export_button(page):
     """Find the '导出文本' element on the page using multiple strategies."""
-    selectors = [
-        "a:has-text('导出文本')",
-        "button:has-text('导出文本')",
-        "span:has-text('导出文本')",
-        "text=导出文本",
-        "a:has-text('导出')",
-        "button:has-text('导出')",
-        "[onclick*='export']",
-    ]
-    for sel in selectors:
-        loc = page.locator(sel).first
-        if loc.count() > 0:
-            html = loc.evaluate("el => el.outerHTML")
-            print(f"  Found with selector '{sel}':")
-            print(f"    {html[:300]}")
-            return loc
-    return None
+    # Also search inside iframes
+    all_frames = [page] + page.frames
+
+    for frame in all_frames:
+        selectors = [
+            "a:has-text('导出文本')",
+            "button:has-text('导出文本')",
+            "span:has-text('导出文本')",
+            "text=导出文本",
+            "a:has-text('导出')",
+            "button:has-text('导出')",
+            "[onclick*='export']",
+            "[onclick*='Export']",
+            "[onclick*='导出']",
+        ]
+        for sel in selectors:
+            try:
+                loc = frame.locator(sel).first
+                if loc.count() > 0:
+                    html = loc.evaluate("el => el.outerHTML")
+                    frame_info = f" (in iframe: {frame.url})" if frame != page else ""
+                    print(f"  Found with selector '{sel}'{frame_info}:")
+                    print(f"    {html[:300]}")
+                    return loc, frame
+            except Exception:
+                continue
+    return None, None
 
 
 def try_download_via_click(page, locator, download_dir):
@@ -188,42 +199,108 @@ def main():
     print(f"    Download dir: {download_dir}")
 
     with sync_playwright() as p:
+        # Launch with anti-detection flags
         browser = p.chromium.launch(
             headless=not args.headed,
+            args=[
+                "--disable-blink-features=AutomationControlled",
+                "--disable-infobars",
+                "--no-first-run",
+                "--no-default-browser-check",
+            ],
         )
         context = browser.new_context(
             accept_downloads=True,
             locale="zh-CN",
+            viewport={"width": 1920, "height": 1080},
+            user_agent=(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/120.0.0.0 Safari/537.36"
+            ),
         )
-        # Set download path for headless mode
         page = context.new_page()
+
+        # Apply stealth patches to avoid bot detection
+        stealth_sync(page)
 
         print(f"\n[2] Loading: {PAGE_URL}")
         try:
             page.goto(PAGE_URL, wait_until="networkidle", timeout=30000)
         except PlaywrightTimeout:
-            print("    networkidle timeout, continuing anyway...")
+            print("    networkidle timeout, trying domcontentloaded...")
+            try:
+                page.goto(PAGE_URL, wait_until="domcontentloaded", timeout=30000)
+            except PlaywrightTimeout:
+                print("    domcontentloaded also timed out, continuing anyway...")
 
         print(f"    Title: {page.title()}")
         print(f"    URL:   {page.url}")
 
         # Give dynamic content time to load
-        page.wait_for_timeout(2000)
+        page.wait_for_timeout(5000)
 
-        print(f"\n[3] Searching for '导出文本' button...")
-        locator = find_export_button(page)
+        # Check if page actually loaded (not blank/blocked)
+        body_text = page.evaluate("document.body ? document.body.innerText.length : 0")
+        print(f"    Page body text length: {body_text} chars")
 
-        if locator:
-            print(f"\n[4] Attempting download...")
-            success = try_download_via_click(page, locator, download_dir)
-            if success:
-                print("\n[Done] Download successful!")
-            else:
-                print("\n[!] Click did not produce a download.")
-                analyze_page(page, download_dir)
-        else:
-            print("  Button not found!")
+        if body_text < 50:
+            print("\n[!] Page appears blank or blocked.")
+            print("    The site may be using advanced bot protection (WAF/JS challenge).")
+            print("\n    Saving debug artifacts...")
             analyze_page(page, download_dir)
+
+            print("\n" + "=" * 60)
+            print("ALTERNATIVE: Use your real browser + DevTools")
+            print("=" * 60)
+            print("""
+Since the site blocks automated browsers, try this approach:
+
+1. Open the page manually in Chrome:
+   http://www.dce.com.cn/dce/channel/list/1018.html
+
+2. Open DevTools (F12) -> Console tab
+
+3. Paste this script to find the export button:
+
+   document.querySelectorAll('*').forEach(el => {
+     let t = el.textContent;
+     if (t.includes('导出') && el.children.length === 0) {
+       console.log('TAG:', el.tagName, 'TEXT:', el.textContent.trim());
+       console.log('HTML:', el.outerHTML);
+       console.log('onclick:', el.getAttribute('onclick'));
+       console.log('href:', el.getAttribute('href'));
+       console.log('---');
+     }
+   });
+
+4. Then paste the output here, and I'll write a direct
+   requests-based script using the exact URL/params.
+
+ALTERNATIVE 2: Use your system Chrome profile (not Playwright's):
+
+   Run this in terminal:
+   google-chrome --remote-debugging-port=9222
+
+   Then re-run this script with:
+   python3 dce_download.py --use-cdp ws://127.0.0.1:9222
+""")
+        else:
+            print(f"\n[3] Searching for '导出文本' button...")
+            locator, frame = find_export_button(page)
+
+            if locator:
+                print(f"\n[4] Attempting download...")
+                target_page = page if frame == page else frame
+                success = try_download_via_click(target_page, locator, download_dir)
+                if success:
+                    print("\n[Done] Download successful!")
+                else:
+                    print("\n[!] Click did not produce a download.")
+                    analyze_page(page, download_dir)
+            else:
+                print("  Button not found!")
+                analyze_page(page, download_dir)
 
         if args.headed:
             print("\n[Paused] Browser is open. Press Enter to close...")
