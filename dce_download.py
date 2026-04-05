@@ -24,7 +24,24 @@ import json
 import glob
 import argparse
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeout
-from playwright_stealth import stealth_sync
+
+# Handle different playwright-stealth package versions
+try:
+    from playwright_stealth import stealth_sync
+except ImportError:
+    try:
+        from playwright_stealth import Stealth
+        _stealth_obj = Stealth()
+        stealth_sync = _stealth_obj.stealth_sync
+    except ImportError:
+        # Fallback: apply stealth manually via JS
+        def stealth_sync(page):
+            page.add_init_script("""
+                Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
+                window.chrome = {runtime: {}};
+                Object.defineProperty(navigator, 'plugins', {get: () => [1,2,3,4,5]});
+                Object.defineProperty(navigator, 'languages', {get: () => ['zh-CN','zh','en']});
+            """)
 
 
 # Load the SPA iframe page directly (bypasses parent page issues)
